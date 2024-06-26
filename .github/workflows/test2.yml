@@ -1,0 +1,19 @@
+name: Tests
+
+on:
+  workflow_dispatch:
+    branches:
+      - '*'
+  push:
+    branches:
+      - test
+  pull_request:
+    branches:
+      - test
+
+jobs:
+  e2e-test:
+    if: github.event_name == 'push' || (github.event_name == 'workflow_dispatch' && github.event.inputs.triggering_branch == 'test')
+    runs-on: ubuntu-latest
+    steps:
+    # Your workflow steps here
