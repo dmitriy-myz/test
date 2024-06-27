@@ -46,6 +46,7 @@ jobs:
             "ref":"${{ github.ref_name }}",
             "environment": "qa",
             "auto_merge": true,
+            "required_contexts": [],
             "payload":"{ \"min_date\": \"2024-06-01\" }","description":"Deploy request from ${{ github.actor }}"
           }'
           
