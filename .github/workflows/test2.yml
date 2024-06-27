@@ -16,4 +16,16 @@ jobs:
     if: github.event_name == 'push' || (github.event_name == 'workflow_dispatch' && github.event.inputs.triggering_branch == 'test')
     runs-on: ubuntu-latest
     steps:
-    # Your workflow steps here
+      - id: checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-tags: true
+          ref: ${{ github.sha }}
+
+      - name: Print debug message
+        shell: bash
+        run: |
+          echo "GITHUB_SHA=${GITHUB_SHA}"
+          echo "GITHUB_REF=${GITHUB_REF}"
+          echo "github.ref=${{ github.ref }}"
+          echo "github.sha=${{ github.ref }}"
