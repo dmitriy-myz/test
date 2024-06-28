@@ -50,7 +50,7 @@ jobs:
             "payload":"{ \"min_date\": \"2024-06-01\" }","description":"Deploy request from ${{ github.actor }}"
           }' | tee out.log
           
-          deployment_url=$(cat out.log | jq '.url')
+          deployment_url=$(cat out.log | jq -r '.url')
           echo "deployment_url=$deployment_url" >> $GITHUB_ENV
           
           
