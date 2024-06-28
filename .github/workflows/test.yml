@@ -50,7 +50,27 @@ jobs:
             "payload":"{ \"min_date\": \"2024-06-01\" }","description":"Deploy request from ${{ github.actor }}"
           }'
           
+          
+          
           #       "username": username,
           #        "base_branch": base_branch,
           #        "min_date": min_date,
           #        "branch": head_branch
+
+      - name: update deployment status
+        if: github.ref_type == 'branch'
+        shell: bash
+        run: |
+          curl -L \
+          -X POST \
+          -H "Accept: application/vnd.github+json" \
+          -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
+          -H "X-GitHub-Api-Version: 2022-11-28" \
+          "${{ github.api_url }}/repos/${{ github.repository }}/deployments/${{ github.deployment_id }}/statuses" \
+          -d '{
+            "state": "success",
+            "environment": "qa",
+            "description": "Deployed successfully",
+            "log_url": "https://log-collector.example.com/1234",
+            "environment_url": "https://my.example.com/"
+            }'
