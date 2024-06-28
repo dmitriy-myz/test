@@ -48,8 +48,10 @@ jobs:
             "auto_merge": true,
             "required_contexts": [],
             "payload":"{ \"min_date\": \"2024-06-01\" }","description":"Deploy request from ${{ github.actor }}"
-          }'
+          }' | tee out.log
           
+          deployment_url=$(cat out.log | jq '.url')
+          echo "deployment_url=$deployment_url" >> $GITHUB_ENV
           
           
           #       "username": username,
@@ -66,7 +68,7 @@ jobs:
           -H "Accept: application/vnd.github+json" \
           -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
           -H "X-GitHub-Api-Version: 2022-11-28" \
-          "${{ github.api_url }}/repos/${{ github.repository }}/deployments/${{ github.deployment_id }}/statuses" \
+          "${deployment_url}/statuses" \
           -d '{
             "state": "success",
             "environment": "qa",
