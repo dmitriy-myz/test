@@ -10,6 +10,9 @@ on:
         description: 'build all'
         required: false
         default: false
+  issue_comment:
+    types: [ created ]
+
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: ${{ github.ref_name != 'master' }}
@@ -32,6 +35,12 @@ jobs:
           echo "GITHUB_REF=${GITHUB_REF}"
           echo "github.ref=${{ github.ref }}"
           echo "github.sha=${{ github.sha }}"
+          echo "github.event.comment.body = ${{ github.event.comment.body }}"
+          echo "github.event.issue.pull_request = ${{ github.event.issue.pull_request }}"
+          echo "github.event.issue.pull_request.head.sha = ${{ github.event.issue.pull_request.head.sha }}"
+          
+          echo printenv
+          printenv
       - name: trigger deploy event
         if: github.ref_type == 'branch'
         shell: bash
