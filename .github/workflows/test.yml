@@ -38,7 +38,8 @@ jobs:
           echo "github.event.comment.body = ${{ github.event.comment.body }}"
           echo "github.event.issue.pull_request = ${{ github.event.issue.pull_request }}"
           echo "github.event.issue.pull_request.head.sha = ${{ github.event.issue.pull_request.head.sha }}"
-          
+          echo "github.event.issue.pull_request.head.sha = ${{ github.event.issue.pull_request.head.sha }}"
+          echo "context.issue.number= ${{ context.issue.number }}"
           echo printenv
           printenv
       - name: trigger deploy event
